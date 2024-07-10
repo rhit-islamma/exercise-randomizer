@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exercise Selector</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <div id="initial-page" class="page">
+    <h1 id="title">WELCOME TO YOUR EXERCISE SELECTOR</h1>
+    <button id="weights-button">WEIGHTS</button>
+  </div>
+  <div id="weights-page" class="page hidden">
+    <h1 id="weights-title">SELECT A CATEGORY</h1>
+    <button class="option-button" data-category="push">PUSH</button>
+    <button class="option-button" data-category="pull">PULL</button>
+    <button class="option-button" data-category="legs">LEGS</button>
+    <button class="option-button" data-category="core">CORE</button>
+    <button id="back-button">BACK</button>
+  </div>
+  <div id="exercise-page" class="page hidden">
+    <h1 id="exercise-title"></h1>
+    <p id="exercise-display"></p>
+    <button id="new-exercise-button">NEW EXERCISE</button>
+    <button id="view-all-button">VIEW ALL</button>
+    <button id="back-to-weights-button">BACK</button>
+  </div>
+  <div id="view-all-page" class="page hidden">
+    <h1>ALL EXERCISES</h1>
+    <div id="all-exercises-list"></div>
+    <button id="back-from-view-all-button">BACK</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
