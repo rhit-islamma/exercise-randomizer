@@ -6,7 +6,7 @@ body, html {
   align-items: center;
   font-family: 'Courier New', Courier, monospace;
   background-color: black;
-  color: green;
+  color: #006400; /* Darker green shade */
 }
 
 .page {
@@ -33,6 +33,15 @@ button {
 }
 
 #title, #weights-title, #exercise-title {
-  border-right: 0.15em solid green;
+  border-right: 0.15em solid #006400; /* Darker green shade */
   padding: 0 20px;
+}
+
+#back-button, #back-to-weights-button, #back-from-view-all-button {
+  margin-top: 20px; /* Additional space for back buttons */
+  background-color: transparent;
+  color: #006400; /* Darker green shade */
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
 }
