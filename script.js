@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", function() {
   const optionButtons = document.querySelectorAll('.option-button');
 
   let currentCategory, currentMuscleGroup;
+  let isTyping = false; // Flag to track if animation is running
+  let typingTimeout; // Timeout ID for clearing the animation
 
   const exercises = {
     push: {
@@ -80,16 +82,22 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function typewriterEffect(elementId, text) {
+    if (isTyping) {
+      clearTimeout(typingTimeout);
+      isTyping = false;
+    }
     let i = 0;
     const element = document.getElementById(elementId);
     element.textContent = '';
+    isTyping = true;
     function type() {
       if (i < text.length) {
         element.textContent += text.charAt(i);
         i++;
-        setTimeout(type, 100);
+        typingTimeout = setTimeout(type, 100);
       } else {
-        element.style.borderRight = 'none'; // Optionally remove the cursor at the end
+        element.style.borderRight = 'none';
+        isTyping = false;
       }
     }
     type();
@@ -131,3 +139,4 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 });
+
