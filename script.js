@@ -9,11 +9,12 @@ document.addEventListener("DOMContentLoaded", function() {
   const viewAllButton = document.getElementById('view-all-button');
   const backFromViewAllButton = document.getElementById('back-from-view-all-button');
   const newExerciseButton = document.getElementById('new-exercise-button');
-  const optionButtons = document.querySelectorAll('.option-button');
+  let optionButtons = document.querySelectorAll('.option-button');
 
   let currentCategory, currentMuscleGroup;
   let isTyping = false; // Flag to track if animation is running
   let typingTimeout; // Timeout ID for clearing the animation
+  let isViewingMuscleGroups = false; // Flag to track if viewing muscle groups
 
   const exercises = {
     push: {
@@ -48,16 +49,13 @@ document.addEventListener("DOMContentLoaded", function() {
     typewriterEffect('weights-title', 'SELECT A CATEGORY');
   });
 
-  optionButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      const category = button.getAttribute('data-category');
-      showMuscleGroups(category);
-    });
-  });
-
   backButton.addEventListener('click', function() {
-    changePage('weights-page', 'initial-page');
-    typewriterEffect('title', 'WELCOME TO YOUR EXERCISE SELECTOR');
+    if (isViewingMuscleGroups) {
+      showCategories();
+    } else {
+      changePage('weights-page', 'initial-page');
+      typewriterEffect('title', 'WELCOME TO YOUR EXERCISE SELECTOR');
+    }
   });
 
   backToWeightsButton.addEventListener('click', function() {
@@ -65,14 +63,14 @@ document.addEventListener("DOMContentLoaded", function() {
     typewriterEffect('weights-title', 'SELECT A CATEGORY');
   });
 
-  viewAllButton.addEventListener('click', function() {
-    changePage('exercise-page', 'view-all-page');
-    showAllExercises(currentCategory, currentMuscleGroup);
-  });
-
   backFromViewAllButton.addEventListener('click', function() {
     changePage('view-all-page', 'exercise-page');
     typewriterEffect('exercise-title', 'EXERCISE SELECTOR');
+  });
+
+  viewAllButton.addEventListener('click', function() {
+    changePage('exercise-page', 'view-all-page');
+    showAllExercises(currentCategory, currentMuscleGroup);
   });
 
   newExerciseButton.addEventListener('click', function() {
@@ -108,6 +106,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function showMuscleGroups(category) {
     currentCategory = category;
+    isViewingMuscleGroups = true;
     const muscleGroups = Object.keys(exercises[category]);
     weightsPage.innerHTML = '<h1 id="weights-title">SELECT A MUSCLE GROUP</h1>';
     muscleGroups.forEach(muscleGroup => {
@@ -128,8 +127,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const exerciseList = exercises[category][muscleGroup];
     const randomExercise = exerciseList[Math.floor(Math.random() * exerciseList.length)];
     const randomModifier = modifiers[Math.floor(Math.random() * modifiers.length)];
-    exercisePage.classList.remove('hidden');
-    weightsPage.classList.add('hidden');
+    changePage('weights-page', 'exercise-page');
     typewriterEffect('exercise-title', `${randomExercise} - ${randomModifier}`);
   }
 
@@ -142,5 +140,43 @@ document.addEventListener("DOMContentLoaded", function() {
       allExercisesList.appendChild(item);
     });
   }
-});
 
+  function showCategories() {
+    isViewingMuscleGroups = false;
+    const categories = ['push', 'pull', 'legs', 'core'];
+    weightsPage.innerHTML = '<h1 id="weights-title">SELECT A CATEGORY</h1>';
+    categories.forEach(category => {
+      const button = document.createElement('button');
+      button.className = 'option-button';
+      button.setAttribute('data-category', category);
+      button.textContent = category.toUpperCase();
+      button.addEventListener('click', function() {
+        showMuscleGroups(this.getAttribute('data-category'));
+      });
+      weightsPage.appendChild(button);
+    });
+    weightsPage.appendChild(backButton);
+    typewriterEffect('weights-title', 'SELECT A CATEGORY');
+  }
+
+  function reattachEventListeners() {
+    optionButtons = document.querySelectorAll('.option-button');
+    optionButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const category = button.getAttribute('data-category');
+        showMuscleGroups(category);
+      });
+    });
+    viewAllButton.addEventListener('click', function() {
+      changePage('exercise-page', 'view-all-page');
+      showAllExercises(currentCategory, currentMuscleGroup);
+    });
+
+    newExerciseButton.addEventListener('click', function() {
+      showRandomExercise(currentCategory, currentMuscleGroup);
+    });
+  }
+
+  // Initial event listener attachment
+  reattachEventListeners();
+});
