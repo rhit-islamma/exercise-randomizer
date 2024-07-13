@@ -57,10 +57,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
   backButton.addEventListener('click', function() {
     changePage('weights-page', 'initial-page');
+    typewriterEffect('title', 'WELCOME TO YOUR EXERCISE SELECTOR');
   });
 
   backToWeightsButton.addEventListener('click', function() {
     changePage('exercise-page', 'weights-page');
+    typewriterEffect('weights-title', 'SELECT A CATEGORY');
   });
 
   viewAllButton.addEventListener('click', function() {
@@ -70,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   backFromViewAllButton.addEventListener('click', function() {
     changePage('view-all-page', 'exercise-page');
+    typewriterEffect('exercise-title', 'EXERCISE SELECTOR');
   });
 
   newExerciseButton.addEventListener('click', function() {
@@ -118,6 +121,7 @@ document.addEventListener("DOMContentLoaded", function() {
       weightsPage.appendChild(button);
     });
     weightsPage.appendChild(backButton);
+    typewriterEffect('weights-title', 'SELECT A MUSCLE GROUP'); // Ensure animation runs on the pick muscle page
   }
 
   function showRandomExercise(category, muscleGroup) {
