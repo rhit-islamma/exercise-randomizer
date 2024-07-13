@@ -17,6 +17,7 @@ body, html {
   width: 100%;
   height: 100vh;
   text-align: center;
+  padding: 20px; /* Add padding for smaller screens */
 }
 
 button {
@@ -27,6 +28,8 @@ button {
   border: none;
   cursor: pointer;
   font-weight: bold;
+  width: 80%; /* Make buttons wider */
+  max-width: 300px; /* Limit max width */
 }
 
 .hidden {
@@ -36,6 +39,7 @@ button {
 #title, #weights-title, #exercise-title {
   border-right: 0.15em solid #006400; /* Darker green shade */
   padding: 0 20px;
+  white-space: nowrap; /* Prevent text from wrapping */
 }
 
 #back-button, #back-to-weights-button, #back-from-view-all-button {
@@ -46,5 +50,27 @@ button {
   cursor: pointer;
   text-decoration: underline;
   font-weight: bold;
-  display: inline-block; 
+  display: inline-block;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+  body, html {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px;
+  }
+
+  .page {
+    padding: 10px;
+  }
+
+  button {
+    width: 100%;
+    padding: 15px;
+  }
+
+  #title, #weights-title, #exercise-title {
+    font-size: 1.5em;
+  }
 }
